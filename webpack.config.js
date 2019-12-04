@@ -18,7 +18,8 @@ module.exports = {
       { test: /\.less$/, use: ['style-loader', 'css-loader', 'less-loader'] },
       { test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader'] },
       {
-        test: /\.(jpg|png|gif|bmp|jpeg)$/,
+        test: /\.(jpg|png|gif|bmp|jpeg)$/i,
+        // use: 'file-loader'
         use: 'url-loader?limit=38000&name=[hash:8]-[name].[ext]'
       },
       {
@@ -26,7 +27,8 @@ module.exports = {
         use: 'url-loader'
       },
       { test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.vue$/, use: 'vue-loader' }
+      { test: /\.vue$/, use: 'vue-loader' },
+      { test: /\.html$/, use: 'html-withimg-loader' }
     ]
   }
 }

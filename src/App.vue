@@ -5,7 +5,9 @@
                title="尚京vue项目"></mt-header>
 
     <!-- router-view -->
-    <router-view></router-view>
+    <transition>
+      <router-view></router-view>
+    </transition>
 
     <!-- tabbar -->
     <nav class="mui-bar mui-bar-tab">
@@ -41,5 +43,20 @@
 <style lang="scss" scoped>
 .app-container {
   padding-top: 40px;
+  overflow-x: hidden;
+  padding-bottom: 50px;
+}
+.v-enter {
+  transform: translateX(100%);
+  opacity: 0;
+}
+.v-leave-to {
+  transform: translateX(-100%);
+  opacity: 0;
+  position: absolute;
+}
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.6s ease;
 }
 </style>
