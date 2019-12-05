@@ -8,6 +8,9 @@ import SearchContainer from './components/tabbar/SearchContainer.vue'
 import NewsList from './components/news/NewsList.vue'
 import NewsInfo from './components/news/NewsInfo.vue'
 
+import PhotoList from './components/photos/PhotoList.vue'
+import PhotoInfo from './components/photos/PhotoInfo.vue'
+
 var router = new VueRouter({
   routes: [
     { path: '/', redirect: '/home' },
@@ -16,7 +19,9 @@ var router = new VueRouter({
     { path: '/shopcar', component: ShopcarContainer },
     { path: '/search', component: SearchContainer },
     { path: '/home/newslist', component: NewsList },
-    { path: '/home/newsinfo/:id', component: NewsInfo }
+    { path: '/home/newsinfo/:id', component: NewsInfo },
+    { path: '/home/photolist', component: PhotoList },
+    { path: '/home/photoinfo/:id', component: PhotoInfo }
   ],
   linkActiveClass: 'mui-active' // 切换路由高亮
 })
