@@ -1,11 +1,9 @@
 <template>
   <div>
     <!-- 轮播 -->
-    <mt-swipe :auto="3000">
-      <mt-swipe-item v-for="item in sliderList" :key="item.id">
-        <img :src="item.img" />
-      </mt-swipe-item>
-    </mt-swipe>
+    <div class="homeslider">
+      <slider :sliderdata="sliderList"></slider>
+    </div>
 
     <ul class="mui-table-view mui-grid-view mui-grid-9">
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
@@ -21,7 +19,7 @@
         </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <router-link to="#">
+        <router-link to="/home/goodslist">
           <img src="../../images/menu3.png" class="" alt="" />
           <div class="mui-media-body">商品购买</div>
         </router-link>
@@ -50,6 +48,7 @@
 
 <script>
 import { Toast } from 'mint-ui'
+import slider from '../subcomponents/slider.vue'
 export default {
   data() {
     return {
@@ -69,18 +68,23 @@ export default {
         }
       })
     }
+  },
+  components: {
+    slider
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.mint-swipe {
-  height: 120px;
+.homeslider {
+  /deep/.mint-swipe {
+    height: 120px;
 
-  .mint-swipe-item {
-    img {
-      width: 100%;
-      height: 100%;
+    .mint-swipe-item {
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 }

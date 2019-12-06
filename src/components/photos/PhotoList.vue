@@ -13,7 +13,7 @@
             data-wid="tab-top-subpage-1.html"
             v-for="item in category"
             :key="item.id"
-            @click="getPhotoListById(item.id)"
+            @tap="getPhotoListById(item.id)"
           >
             {{ item.title }}
           </a>
