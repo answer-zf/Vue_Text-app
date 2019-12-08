@@ -2,6 +2,44 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
+// 注册 vuex
+import Vuex from 'vuex'
+Vue.use(Vuex)
+var car = JSON.parse(localStorage.getItem('car') || '[]')
+const store = new Vuex.Store({
+  state: {
+    car: car
+  },
+  mutations: {
+    addToCar(state, goodsinfo) {
+      var flag = false // 判断是否为同一个商品的表示符
+      // 如果是同一个商品，只需要增加商品数量
+      state.car.some(item => {
+        if (item.id == goodsinfo.id) {
+          item.count += parseInt(goodsinfo.count)
+          flag = true
+          return true
+        }
+      })
+      // 如果不是同一个商品，则添加商品信息
+      if (!flag) {
+        state.car.push(goodsinfo)
+      }
+      // 每当更新 car加数据存储到本地 localStorage 中
+      localStorage.setItem('car', JSON.stringify(state.car))
+    }
+  },
+  getters: {
+    optCount(state) {
+      var c = 0
+      state.car.forEach(item => {
+        c += parseInt(item.count)
+      })
+      return c
+    }
+  }
+})
+
 import moment from 'moment'
 Vue.filter('dateFormat', (dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') => {
   return moment(dataStr).format(pattern)
@@ -33,25 +71,14 @@ Vue.use(MintUI)
 // 图片预览插件
 import VuePreview from 'vue-preview'
 Vue.use(VuePreview)
-// Vue.use(preview, {
-//   mainClass: 'pswp--minimal--dark',
-//   barsSize: { top: 0, bottom: 0 },
-//   captionEl: false,
-//   fullscreenEl: false,
-//   shareEl: false,
-//   bgOpacity: 0.85,
-//   tapToClose: true,
-//   tapToToggleControls: false
-// })
 
 import router from './router.js'
 
 import app from './App.vue'
 
-var vm = new Vue({
+const vm = new Vue({
   el: '#app',
   render: c => c(app),
-  router
+  router,
+  store
 })
-
-console.log(vm)

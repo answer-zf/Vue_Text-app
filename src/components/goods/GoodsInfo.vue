@@ -77,7 +77,6 @@ export default {
       id: this.$route.params.id, // 将路由对象中的id 挂载到 data 上，方便调用
       goodsslider: [],
       goodscontent: {},
-      goodsinfo: {},
       ballflag: false, // 控制小球显示隐藏标识符
       selectedCount: 1 // 保存用户选择商品的数量，默认值：1
     }
@@ -128,6 +127,14 @@ export default {
     },
     addToShopCar() {
       this.ballflag = !this.ballflag
+      // 拼接出 保存到store 中 car 数组里的 商品信息对象，
+      var goodsinfo = {
+        id: this.id,
+        count: this.selectedCount,
+        price: this.goodscontent.sell_price,
+        selected: true
+      }
+      this.$store.commit('addToCar', goodsinfo)
     },
     getSelectedCount(count) {
       this.selectedCount = count

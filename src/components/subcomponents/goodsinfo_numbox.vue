@@ -20,7 +20,6 @@ import mui from '../../lib/mui/js/mui.min.js'
 export default {
   mounted() {
     mui('.mui-numbox').numbox()
-    console.log(this.quantity)
   },
   methods: {
     countChanged() {
@@ -34,7 +33,8 @@ export default {
       mui('.mui-numbox')
         .numbox()
         .setOption('max', newVal)
-    }
+    },
+    created() {}
   }
 }
 </script>
