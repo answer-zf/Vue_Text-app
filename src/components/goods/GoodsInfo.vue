@@ -5,7 +5,7 @@
       @enter="enter"
       @after-enter="afterEnter"
     >
-      <div class="ball" v-if="ballflag"></div>
+      <div class="ball" v-show="ballflag" ref="ball"></div>
     </transition>
     <!-- 轮播 -->
     <div class="mui-card">
@@ -29,9 +29,16 @@
               >￥{{ goodscontent.sell_price }}</span
             >
           </p>
-          <p>购买数量： <numbox style="display: inline-block"></numbox></p>
+          <p>
+            购买数量：
+            <numbox
+              style="display: inline-block"
+              :quantity="goodscontent.stock_quantity"
+              @getCount="getSelectedCount"
+            ></numbox>
+          </p>
           <mt-button type="primary" size="small">立即购买</mt-button>
-          <mt-button type="danger" size="small" @click="ballflag = !ballflag"
+          <mt-button type="danger" size="small" @click="addToShopCar"
             >加入购物车</mt-button
           >
         </div>
@@ -71,7 +78,8 @@ export default {
       goodsslider: [],
       goodscontent: {},
       goodsinfo: {},
-      ballflag: false // 控制小球显示隐藏标识符
+      ballflag: false, // 控制小球显示隐藏标识符
+      selectedCount: 1 // 保存用户选择商品的数量，默认值：1
     }
   },
   created() {
@@ -102,9 +110,27 @@ export default {
       this.$router.push({ name: 'goodscmt', params: { id } })
     },
     // 半程动画
-    beforeEnter(el) {},
+    beforeEnter(el) {
+      el.style.transform = 'translate(0, 0)'
+    },
     enter(el, done) {
+      const ballPosition = this.$refs.ball.getBoundingClientRect()
+      const badge = document.getElementById('badge').getBoundingClientRect()
+      const xDist = badge.left - ballPosition.left
+      const yDist = badge.top - ballPosition.top
       el.offsetWidth
+      el.style.transform = `translate(${xDist}px, ${yDist}px)`
+      el.style.transition = 'all .5s cubic-bezier(.57,-0.17,1,.62)'
+      done()
+    },
+    afterEnter(el) {
+      this.ballflag = !this.ballflag
+    },
+    addToShopCar() {
+      this.ballflag = !this.ballflag
+    },
+    getSelectedCount(count) {
+      this.selectedCount = count
     }
   },
   components: {
@@ -147,9 +173,9 @@ export default {
     border-radius: 50%;
     background-color: #f00;
     position: absolute;
-    z-index: 99;
-    top: 370px;
-    left: 146px;
+    z-index: 9999;
+    top: 353px;
+    left: 152px;
   }
 }
 </style>

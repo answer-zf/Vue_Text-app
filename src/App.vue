@@ -20,7 +20,7 @@
       </router-link>
       <router-link class="mui-tab-item-zf" to="/shopcar">
         <span class="mui-icon mui-icon-extra mui-icon-extra-cart">
-          <span class="mui-badge">0</span>
+          <span class="mui-badge" id="badge" @goodsdata="num">0</span>
         </span>
         <span class="mui-tab-label">购物车</span>
       </router-link>
@@ -32,7 +32,20 @@
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  data() {
+    return {
+      badge: 0
+    }
+  },
+  methods: {
+    num(data) {
+      this.badge = data
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 .mint-header {
