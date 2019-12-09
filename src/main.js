@@ -5,10 +5,9 @@ Vue.use(VueRouter)
 // 注册 vuex
 import Vuex from 'vuex'
 Vue.use(Vuex)
-var car = JSON.parse(localStorage.getItem('car') || '[]')
 const store = new Vuex.Store({
   state: {
-    car: car
+    car: JSON.parse(localStorage.getItem('car') || '[]')
   },
   mutations: {
     addToCar(state, goodsinfo) {
@@ -82,3 +81,4 @@ const vm = new Vue({
   router,
   store
 })
+console.log(vm)
