@@ -26,6 +26,38 @@ const store = new Vuex.Store({
       }
       // 每当更新 car加数据存储到本地 localStorage 中
       localStorage.setItem('car', JSON.stringify(state.car))
+    },
+    // 当购物车页面中的数量发生改变，同步数据
+    updateGoodslist(state, goodsinfo) {
+      state.car.some(item => {
+        if (item.id == goodsinfo.id) {
+          item.count = parseInt(goodsinfo.count)
+          return true
+        }
+      })
+      localStorage.setItem('car', JSON.stringify(state.car))
+    },
+    deleteGoodsInfo(state, goodsid) {
+      // var index = state.car.findIndex(item => {
+      //   return item.id == goodsid
+      // })
+      // state.car.splice(index, 1)
+      state.car.some((item, i) => {
+        if (item.id == goodsid) {
+          state.car.splice(i, 1)
+          return true
+        }
+      })
+      localStorage.setItem('car', JSON.stringify(state.car))
+    },
+    updataGoodsSelected(state, goodsinfo) {
+      state.car.some(item => {
+        if (item.id == goodsinfo.id) {
+          item.selected = goodsinfo.selected
+          return true
+        }
+      })
+      localStorage.setItem('car', JSON.stringify(state.car))
     }
   },
   getters: {
@@ -35,6 +67,34 @@ const store = new Vuex.Store({
         c += parseInt(item.count)
       })
       return c
+    },
+    // 建立一个对象，将 id 与 count 建立联系，
+    getGoodsCount(state) {
+      var o = {}
+      state.car.forEach(item => {
+        o[item.id] = item.count
+      })
+      return o
+    },
+    getGoodsSelected(state) {
+      var o = {}
+      state.car.forEach(item => {
+        o[item.id] = item.selected
+      })
+      return o
+    },
+    getGoodsAmount(state) {
+      var o = {
+        count: 0,
+        amount: 0
+      }
+      state.car.forEach(item => {
+        if (item.selected) {
+          o.count += item.count
+          o.amount += item.count * item.price
+        }
+      })
+      return o
     }
   }
 })
